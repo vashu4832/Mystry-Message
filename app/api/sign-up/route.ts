@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { success } from "zod";
 
 export async function POST(request: Request) {
+    
     await dbConnect();
 
     try {
