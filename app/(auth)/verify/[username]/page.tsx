@@ -9,7 +9,6 @@ import { verifySchema } from '@/schemas/verifySchema'
 import axios, { AxiosError } from 'axios'
 import { ApiResponse } from '@/types/ApiResponse'
 
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
 import {
