@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
-import { success } from "zod";
 
 
 export async function POST(request: Request){
@@ -21,7 +20,7 @@ export async function POST(request: Request){
                     success: false,
                     message: "User not found"
                 },
-                {status: 500}
+                {status: 404}
             )
         }
 
@@ -34,7 +33,7 @@ export async function POST(request: Request){
 
             return Response.json(
                 {
-                    success: false,
+                    success: true,
                     message: "Account verified successfully"
                 }, {status: 200}
             )
