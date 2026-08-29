@@ -125,7 +125,7 @@ function Page() {
             </span>
           </h1>
           <p className="mt-4 md:mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-            Explore Mystry Message — where your identity remains a secret, and honesty finally has a safe place to live.
+            Explore Mystry Message - where your identity remains a secret, and honesty finally has a safe place to live.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Button size="lg" className="gap-2" onClick={() => router.push("/sign-up")}>
@@ -207,7 +207,7 @@ function Page() {
         <section className="w-full max-w-2xl text-center rounded-2xl border bg-muted/30 p-8 md:p-12">
           <h2 className="text-2xl md:text-3xl font-bold">Ready to Hear the Truth?</h2>
           <p className="mt-3 text-muted-foreground">
-            Join the people already discovering what others really think — anonymously, honestly, and without judgment.
+            Join the people already discovering what others really think - anonymously, honestly, and without judgment.
           </p>
           <Button size="lg" className="mt-6 gap-2" onClick={() => router.push("/sign-up")}>
             Create Your Free Account <ArrowRight className="h-4 w-4" />
