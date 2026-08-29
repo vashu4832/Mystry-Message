@@ -31,6 +31,9 @@ function Page() {
 
   const form = useForm({
     resolver: zodResolver(acceptMessageSchema),
+    defaultValues: {
+        acceptMessages: false,
+    },
   });
 
   const { register, watch, setValue } = form;
@@ -41,7 +44,7 @@ function Page() {
     setIsSwitchLoading(true);
     try {
       const response = await axios.get<ApiResponse>(`/api/accept-messages`);
-      setValue("acceptMessages", response.data.isAcceptingMessage);
+      setValue("acceptMessages", response.data.isAcceptingMessages ?? false);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.add({

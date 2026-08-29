@@ -124,7 +124,7 @@ function Page() {
                         <p
                           className={`text-sm ${usernameMessage === "Username is unique" ? 'text-green-500' : 'text-red-500'}`}
                         >
-                          test {usernameMessage}
+                          {username} {usernameMessage}
                         </p>
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />

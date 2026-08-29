@@ -4,15 +4,9 @@ import { Controller, useForm } from "react-hook-form";
 
 import * as z from "zod";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useDebounceValue, useDebounceCallback } from "usehooks-ts";
 import { toast } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
-import { signUpSchema } from "@/schemas/signUpSchema";
-import axios, { AxiosError } from "axios";
-import { ApiResponse } from "@/types/ApiResponse";
 
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
 import {
@@ -26,7 +20,6 @@ import { signInSchema } from "@/schemas/signInSchema";
 import { signIn } from "next-auth/react";
 
 function Page() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const router = useRouter();
 
@@ -52,8 +45,8 @@ function Page() {
       })
     }
 
-    if(result?.url){
-      router.replace('/dashboard')
+    if(result?.ok){
+      window.location.href = '/dashboard'
     }
   };
 

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-function VErifyAccount() {
+function VerifyAccount() {
     const router = useRouter()
     const param = useParams<{username: string}>()
 
@@ -43,7 +43,7 @@ function VErifyAccount() {
                 description: response.data.message
             })
 
-            router.replace('sign-in')
+            router.replace('/sign-in')
         } catch (error) {
             console.error("Error in signup of user", error);
             const axiosError = error as AxiosError<ApiResponse>;
@@ -100,4 +100,4 @@ function VErifyAccount() {
     )
 }
 
-export default VErifyAccount
+export default VerifyAccount
