@@ -1,13 +1,10 @@
-"use client";
 import {
   Card,
   CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 
 import {
   AlertDialog,
@@ -34,43 +31,45 @@ type MessageCardProps = {
 
 function MessageCard({message, onMessageDelete}: MessageCardProps) {
     const handleDeleteConfirm = async () => {
-    try {
-        const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
-        toast.add({ title: response.data.message })
-        onMessageDelete(message._id.toString())
-    } catch (error) {
-        const axiosError = error as AxiosError<ApiResponse>
-        toast.add({
-            title: axiosError.response?.data.message ?? "Failed to delete message"
-        })
+        try {
+            const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id.toString()}`)
+            toast.add({
+                title: response.data.message,
+            })
+            onMessageDelete(message._id.toString())
+        } catch (error) {
+            const axiosError = error as AxiosError<ApiResponse>
+            toast.add({
+                title: axiosError.response?.data.message ?? "Failed to delete message"
+            })
+        }
     }
-}
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="sr-only">Message</CardTitle>
-        <AlertDialog>
-          <AlertDialogTrigger render={<Button variant="destructive"><X className="w-5 h-5" /></Button>}>
-            Show Dialog
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account from our servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-        <CardDescription>{new Date(message.createdAt).toLocaleString()}</CardDescription>
-        <CardAction>{message.content}</CardAction>
+        <CardDescription>
+          {new Date(message.createdAt).toLocaleString()}
+        </CardDescription>
+        <CardAction>
+          <AlertDialog>
+            <AlertDialogTrigger render={<Button variant="destructive" size="icon" className="bg-red-500"><X className="w-4 h-4 text-white"/></Button>} />
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete this message.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </CardAction>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>{message.content}</CardContent>
     </Card>
   );
 }
