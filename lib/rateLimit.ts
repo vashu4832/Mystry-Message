@@ -19,7 +19,7 @@ export const messageRateLimit = new Ratelimit({
 // 3 requests per 60 seconds.
 export const aiRateLimit = new Ratelimit({
     redis,
-    limiter: Ratelimit.slidingWindow(3, "60 s"),
+    limiter: Ratelimit.slidingWindow(5, "60 s"),
     analytics: true,
     prefix: "ratelimit:ai",
 });
