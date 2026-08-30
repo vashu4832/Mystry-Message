@@ -6,6 +6,7 @@ import { User } from "next-auth";
 import { streamText, APICallError } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import { NextResponse } from 'next/server';
+import { aiRateLimit } from "@/lib/rateLimit";
 
 // No `export const runtime = 'edge'` — this route needs DB access.
 
@@ -24,6 +25,15 @@ export async function POST(request: Request) {
             success: false,
             message: "Not authenticated"
         }, { status: 401 })
+    }
+
+    const { success } = await aiRateLimit.limit(user._id!)
+
+    if (!success) {
+        return NextResponse.json(
+            { success: false, message: "Too many requests. Please wait before refreshing insights again." },
+            { status: 429 }
+        )
     }
 
     try {

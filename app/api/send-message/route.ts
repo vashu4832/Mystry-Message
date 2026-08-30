@@ -1,8 +1,27 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { Message } from "@/model/User";
+import { messageRateLimit } from "@/lib/rateLimit";
 
 export async function POST(request: Request) {
+
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? '127.0.0.1'
+    const { success, limit, remaining, reset } = await messageRateLimit.limit(ip)
+
+    if (!success) {
+        return Response.json({
+            success: false,
+            message: "You're sending messages too quickly. Please wait a moment and try again."
+        }, {
+            status: 429,
+            headers: {
+                'X-RateLimit-Limit': limit.toString(),
+                'X-RateLimit-Remaining': remaining.toString(),
+                'X-RateLimit-Reset': reset.toString(),
+            }
+        })
+    }
+
     await dbConnect();
 
     const { username, content } = await request.json();
