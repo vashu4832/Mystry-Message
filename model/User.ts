@@ -27,6 +27,8 @@ export interface User extends Document{
     isAcceptingMessage: boolean;
     messages: Message[];
     feedbackContext?: string;
+    forgotPasswordCode?: string;
+    forgotPasswordCodeExpiry?: Date;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -65,6 +67,12 @@ const UserSchema: Schema<User> = new Schema({
     feedbackContext: {
         type: String,
         default: ''
+    },
+    forgotPasswordCode: {
+        type: String
+    },
+    forgotPasswordCodeExpiry: {
+        type: String
     },
     messages: [MessageSchema]
 })

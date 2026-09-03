@@ -115,6 +115,11 @@ function Page() {
               </Button>
             </form>
           </CardContent>
+          <div className="text-right">
+              <Link href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-900">
+                  Forgot password?
+              </Link>
+          </div>
           <div className="text-center mt-4">
             <p>
               Not Registered Yet?{" "}

@@ -23,3 +23,10 @@ export const aiRateLimit = new Ratelimit({
     analytics: true,
     prefix: "ratelimit:ai",
 });
+
+export const otpRateLimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(3, "10 m"),
+    analytics: true,
+    prefix: "ratelimit:otp",
+});

@@ -18,8 +18,12 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 
 function VerifyAccount() {
+    const [isResending, setIsResending] = useState(false)
+
     const router = useRouter()
     const param = useParams<{username: string}>()
 
@@ -29,6 +33,22 @@ function VerifyAccount() {
             code: '',
         }
     });
+
+    const handleResendCode = async () => {
+        setIsResending(true)
+        try {
+            const response = await axios.post('/api/resend-otp', { username: param.username })
+            toast.add({ title: "Success", description: response.data.message })
+        } catch (error) {
+            const axiosError = error as AxiosError<ApiResponse>
+            toast.add({
+                title: "Error",
+                description: axiosError.response?.data.message ?? "Failed to resend code"
+            })
+        } finally {
+            setIsResending(false)
+        }
+    }
 
     const onSubmit = async(data: z.infer<typeof verifySchema>) => {
 
@@ -94,6 +114,9 @@ function VerifyAccount() {
                             <Button type='submit'>Submit</Button>
                         </form>
                     </CardContent>
+                    <Button type="button" variant="outline" onClick={handleResendCode} disabled={isResending}>
+                        {isResending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Resend Code"}
+                    </Button>
                 </div>
             </div>
         </>

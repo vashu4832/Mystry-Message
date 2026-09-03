@@ -2,6 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { Message } from "@/model/User";
 import { messageRateLimit } from "@/lib/rateLimit";
+import { moderateContent } from "@/lib/moderateContent";
 
 export async function POST(request: Request) {
 
@@ -46,6 +47,14 @@ export async function POST(request: Request) {
                     message: "User is not accepting the messages"
                 },
                 { status: 403 }
+            )
+        }
+
+        const moderation = await moderateContent(content)
+        if (moderation.flagged) {
+            return Response.json(
+                { success: false, message: "This message violates our content guidelines and cannot be sent." },
+                { status: 422 }
             )
         }
 
